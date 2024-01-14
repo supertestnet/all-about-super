@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <style>
+            * {
+                box-sizing: border-box;
+                font-size: 1.15rem;
+                font-family: Arial, sans-serif;
+            }
+            html {
+                max-width: 1000px;
+                padding: 3rem 1rem;
+                margin: auto;
+                line-height: 1.25;
+                padding: 0;
+            }
+            body {
+                margin: 3rem 1rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            input {
+                line-height: 1.25;
+                width: 100%;
+                height: 1.8rem;
+                font-size: 1.15rem;
+                border: 1px solid grey;
+            }
+            .projects {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .project {
+                max-width: 15rem;
+                padding: 1rem;
+                border: 1px solid black;
+                border-radius: 1rem;
+                margin: .5rem;
+                color: black;
+                text-decoration: none;
+            }
+            .project .project_image_and_name {
+                background-size: cover;
+                background-position: 50% 50%;
+                color: white;
+                height: 8rem;
+                display: flex;
+                align-items: flex-end;
+            }
+            .project .project_nym {
+                color: white;
+                min-height: 50%;
+                padding: 1rem;
+                display: flex;
+                align-items: flex-end;
+                background-image: linear-gradient(rgb(255,255,255,0), black);
+                width: 100%;
+            }
+            .project .project_desc {
+                font-size: 80%;
+                margin-top: .5rem;
+            }
+            @media screen and (max-width: 600px) {
+            }
+        </style>
+        <script>
+            var $ = document.querySelector.bind( document );
+            var $$ = document.querySelectorAll.bind( document );
+            var url_params = new URLSearchParams( window.location.search );
+            var url_keys = url_params.keys();
+            var $_GET = {}
+            for ( var key of url_keys ) $_GET[ key ] = url_params.get( key );
+        </script>
+    </head>
+    <body>
+        <h1>Super Testnet</h1>
+        <p>Hi, I'm a freelance software developer focused on bitcoin including lightning, as well as nostr and, most recently, bitvm. You can support my work here: bc1qefhunyf8rsq77f38k07hn2e5njp0acxhlheksn</p>
+        <h2>Projects</h2>
+        <div class="projects"></div>
+        <script>
+            function shuffle(array) {
+              let currentIndex = array.length,  randomIndex;
+
+              // While there remain elements to shuffle.
+              while (currentIndex > 0) {
+
+                // Pick a remaining element.
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                // And swap it with the current element.
+                [array[currentIndex], array[randomIndex]] = [
+                  array[randomIndex], array[currentIndex]];
+              }
+
+              return array;
+            }
+            var projects = [{
+                name: "Hodl contracts",
+                desc: "A non-custodial oracle and escrow system for the lightning network",
+                image: "https://camo.githubusercontent.com/a553e7545a8e50b767544f871f4c6905ec9c3dde76c00d845a7806eba303c92c/68747470733a2f2f692e6962622e636f2f364e57394b734c2f53637265656e73686f742d323032312d30392d32312d31302d34392d31322d504d2e706e67",
+                link: "https://github.com/supertestnet/hodlcontracts",
+            },{
+                name: "BTC Paywall",
+                desc: "A wordpress plugin that creates a paywall for almost any wordpress content, payable in bitcoin over the lightning network",
+                image: "https://i.ibb.co/GWmbGDP/btc-paywall-image.png",
+                link: "https://github.com/supertestnet/btcpaywall",
+            },{
+                name: "Satoshi Votes",
+                desc: "A tool for managing a database of items that people can vote for by sending sats",
+                image: "https://i.ibb.co/Wkj6t2w/satoshi-votes-image.png",
+                link: "https://github.com/supertestnet/articlevotes",
+            },{
+                name: "Lightning Login",
+                desc: "Let people log into your wordpress website using their bitcoin wallet",
+                image: "https://i.ibb.co/FKc5zJd/ln-login-image.png",
+                link: "https://github.com/supertestnet/lnlogin",
+            },{
+                name: "Bitcoin Chess",
+                desc: "Play a game of chess and signal every move in a bitcoin transaction. An educational experiment with key tweaking",
+                image: "https://i.ibb.co/2S7Gh0v/bitcoin-chess-image.png",
+                link: "https://github.com/supertestnet/bitcoin-chess",
+            },{
+                name: "Friendica Marketplace",
+                desc: "Simple marketplace plugin for friendica with bitcoin wallet support",
+                image: "https://i.ibb.co/X2Rp9x4/friendica-marketplace-image.png",
+                link: "https://github.com/supertestnet/friendica-marketplace/",
+            },{
+                name: "Sigchains",
+                desc: "A chain of timestamped signatures embedded into bitcoin’s blockchain designed for issuing and transferring tokens at lightning speed",
+                image: "https://i.ibb.co/y4ZzfJD/sigchains-image.png",
+                link: "https://github.com/supertestnet/sigchains",
+            },{
+                name: "Coinflip Contract",
+                desc: "A fair coinflip on bitcoin with no trusted third party and coordination over nostr",
+                image: "https://i.ibb.co/DDCLLph/coinflip-image.png",
+                link: "https://github.com/brilliancebitcoin/coinflip",
+            },{
+                name: "Whisper Addresses",
+                desc: "A privacy tool for sending bitcoins to people using reusable javascript instead of reusable addresses",
+                image: "https://i.ibb.co/qjQb55z/whisper-image.png",
+                link: "https://github.com/supertestnet/whisper-addresses/",
+            },{
+                name: "Bullrun",
+                desc: "Ridesharing software powered by bitcoin payments and the lightning network",
+                image: "https://i.ibb.co/Z2cm2Vd/bullrun.png",
+                link: "https://github.com/supertestnet/bullrun",
+            },{
+                name: "Sat Surfer",
+                desc: "A chrome extension for injecting ads into a twitter feed, paid for in bitcoin",
+                image: "https://i.ibb.co/Cvw7sgx/sat-surfer-image.png",
+                link: "https://github.com/supertestnet/sat-surfer.js/",
+            },{
+                name: "Log Alerts",
+                desc: "A tool that alerts you via Telegram's incoming notification bot whenever you stack sats in joinmarket",
+                image: "https://i.ibb.co/MBMsBKc/logalerts-image.png",
+                link: "https://github.com/supertestnet/log-alerts",
+            },{
+                name: "Nostr workshop",
+                desc: "A workshop to learn how to write your first application using the nostr message protocol",
+                image: "https://i.ibb.co/VJN2q3r/nostr-workshop-image.png",
+                link: "https://github.com/supertestnet/nostr-workshop-demo",
+            },{
+                name: "JS Browser Wallet",
+                desc: "A bare-bones bitcoin wallet for the base layer implemented in vanilla javascript",
+                image: "https://i.ibb.co/X3rKbnf/js-browser-wallet-image.png",
+                link: "https://github.com/supertestnet/vanilla-js-browser-wallet",
+            },{
+                name: "Lightning Vouchers",
+                desc: "Non-custodial evouchers for simpler lightning payments",
+                image: "https://i.ibb.co/9yTHGS8/ln-vouchers-image.png",
+                link: "https://github.com/supertestnet/lightning-evouchers",
+            },{
+                name: "Learn bitcoin script",
+                desc: "A workshop to learn how to write programs in bitcoin script",
+                image: "https://i.ibb.co/qD4Bdz4/learn-btc-script-image.png",
+                link: "https://www.youtube.com/watch?v=C9wf14vlLOc",
+            },{
+                name: "Bitcoin Smart Contract Glossary",
+                desc: "A descriptive framework of tools and best practices for creating smart contracts using bitcoin",
+                image: "https://i.ibb.co/Sn3Cc1r/glossary-image.png",
+                link: "https://github.com/supertestnet/btcsmartcontracts",
+            },{
+                name: "Anigma",
+                desc: "A clone of telegram built on nostr",
+                image: "https://i.ibb.co/D5BST6P/anigma-image.png",
+                link: "https://github.com/brilliancebitcoin/nostrgram",
+            },{
+                name: "Satoshi Jump",
+                desc: "Send and receive text messages over walkie talkie",
+                image: "https://i.ibb.co/HKHJXY0/satoshi-jump-image.png",
+                link: "https://github.com/supertestnet/satoshi-jump",
+            },{
+                name: "Void",
+                desc: "A bitcoin wallet that makes every send a coinjoin",
+                image: "https://i.ibb.co/M6s9zS1/void-image.png",
+                link: "https://github.com/brilliancebitcoin/void/",
+            },{
+                name: "Lightning Controller",
+                desc: "Easily control an LNBits instance using php",
+                image: "https://i.ibb.co/CbhgHNZ/lightning-controller-image.png",
+                link: "https://github.com/supertestnet/lightningcontroller/",
+            },{
+                name: "Inscribe the Planet",
+                desc: "An online interface for creating inscriptions",
+                image: "https://i.ibb.co/yp2PHxv/inscriber-image.png",
+                link: "https://github.com/supertestnet/inscriptions-online",
+            },{
+                name: "Tor talker",
+                desc: "A tor proxy for connecting to lnbits and/or lnd over tor, with functions for getting and checking invoices",
+                image: "https://i.ibb.co/80kTch8/tor-talker-image.png",
+                link: "https://github.com/supertestnet/tortalker",
+            },{
+                name: "Coinjoin explorer",
+                desc: "A block explorer that only shows the coinjoins in each block and info about those coinjoins",
+                image: "https://i.ibb.co/cFCcZkP/coinjoin-explorer-image.png",
+                link: "https://github.com/supertestnet/coinjoin-explorer",
+            },{
+                name: "Rule 110 in Bitcoin Script",
+                desc: "Bitcoin addresses where coin withdrawals cause nodes to execute two generations of an elementary cellular automata that is also a universal turing machine",
+                image: "https://i.ibb.co/ZV2hBpT/rule-110-in-btc-script.png",
+                link: "https://github.com/supertestnet/rule-110-in-bitcoin-script/",
+            },{
+                name: "Breaker of Jpegs",
+                desc: "A tool for increasing the off-by-one bug in ordinal explorers",
+                image: "https://camo.githubusercontent.com/67145764e89b0d6538878dfc4bb93c036b0a9ea60eaa6ae81807b64d550ee27b/68747470733a2f2f7375706572746573746e65742e6769746875622e696f2f627265616b65722d6f662d6a706567732f692d616d2d6265636f6d652d6a7065672d64657374726f7965722e706e67",
+                link: "https://github.com/supertestnet/breaker-of-jpegs",
+            },{
+                name: "Nodejs wallet daemon",
+                desc: "A nodejs wallet daemon managed via get requests",
+                image: "https://i.ibb.co/h8nQYff/nodejs-wallet-image.png",
+                link: "https://github.com/supertestnet/nodejs-wallet-daemon",
+            },{
+                name: "Bitcoin lottery contract",
+                desc: "A lottery in bitcoin script with no escrow, based on random number generation and modular arithmetic",
+                image: "https://i.ibb.co/vPdv5By/btc-lottery-image.png",
+                link: "https://github.com/supertestnet/bitcoin-lottery-contract/",
+            },{
+                name: "Celebrity escrow",
+                desc: "Censorship resistant peer to peer escrow with bitcoin and nostr",
+                image: "https://i.ibb.co/XpnSRDX/celebrity-escrow-image.png",
+                link: "https://github.com/supertestnet/celebrity-escrow",
+            },{
+                name: "Loan shark",
+                desc: "Fully collateralized bitcoin only loans without custodians, escrows, or margin calls",
+                image: "https://supertestnet.github.io/loan-shark/how_it_works.png",
+                link: "https://github.com/supertestnet/loan-shark",
+            },{
+                name: "Frightening network 👻",
+                desc: "A rewrite of the lightning network in vanilla javascript with all new specifications",
+                image: "https://i.ibb.co/phSCvfS/frightening-network.png",
+                link: "https://github.com/supertestnet/frightening-network",
+            },{
+                name: "Learn HTML -- Lesson 1 of the Pleb Devs Course",
+                desc: "Basic course intro to developing on bitcoin and lightning. Learn HTML basics, an important first step in your web development journey.",
+                image: "https://i3.ytimg.com/vi/YSK6m8tz5hc/hqdefault.jpg",
+                link: "https://www.youtube.com/watch?v=YSK6m8tz5hc",
+            },{
+                name: "Rise",
+                desc: "Crowdfunding software with an oracle that ensures contributors get their money back if the fundraising goal is not reached",
+                image: "https://i.ibb.co/B3dWwgN/rise-image.png",
+                link: "https://github.com/supertestnet/rise-fundraising-software",
+            },{
+                name: "Zaplocker",
+                desc: "Non-custodial lightning address server with base layer support too",
+                image: "https://i.ibb.co/ZMFbYHJ/zaplocker-screenshot.png",
+                link: "https://github.com/supertestnet/zaplocker",
+            },{
+                name: "Hoard",
+                desc: "Bitcoin vaults without a soft fork",
+                image: "https://i.ibb.co/N6G3zHs/hoard-image.png",
+                link: "https://github.com/supertestnet/hoard",
+            },{
+                name: "Pulsar",
+                desc: "An encrypted chat app that masks your metadata by sending fixed-length, fixed-frequency messages over the nostr messaging network",
+                image: "https://i.ibb.co/wym8NJP/pulsar-image.png",
+                link: "https://github.com/supertestnet/pulsar",
+            },{
+                name: "Spacechain launcher",
+                desc: "An implementation of a spacechain with a mechanism for launching your own",
+                image: "https://i.ibb.co/SB51t4K/spacechain-launcher.png",
+                link: "https://github.com/supertestnet/spacechain-launcher",
+            },{
+                name: "Javascript and Bitcoin -- Lesson 3 of the Pleb Dev Course",
+                desc: "Learn how to use javascript, a powerful and flexible programming language for adding website interactivity, and LNbits, a lightning wallet and account system.",
+                image: "https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg",
+                link: "https://www.youtube.com/watch?v=xnkgvaCgLTQ",
+            },{
+                name: "p2bo - pay to boil the oceans",
+                desc: "Peer to peer hashrate marketplace",
+                image: "https://i.ibb.co/CMpNQb6/p2bo-image.png",
+                link: "https://github.com/supertestnet/p2bo",
+            },{
+                name: "Bitpac",
+                desc: "Publicly auditable cooperatives that live on bitcoin",
+                image: "https://i.ibb.co/H7v2rr4/bitpac-image.png",
+                link: "https://github.com/supertestnet/bitpac",
+            },{
+                name: "Musig playground",
+                desc: "A playground for creating and redeeming musig outputs",
+                image: "https://i.ibb.co/JzXrFfc/musig-playground.png",
+                link: "https://github.com/supertestnet/musig-playground",
+            },{
+                name: "Swap service",
+                desc: "An orderbook for performing submarine swaps over nostr",
+                image: "https://camo.githubusercontent.com/78c50868ea85fde0bb1ee8353e0a15d87d82bfee57dc1d88a8281111336ca06c/68747470733a2f2f7375706572746573746e65742e6769746875622e696f2f737761702d736572766963652f737761702d736572766963652d73637265656e73686f742d776974682d796f75747562652d6c6f676f2e706e67",
+                link: "https://github.com/supertestnet/swap-service",
+            },{
+                name: "₿ for Book",
+                desc: "Sell books for bitcoin using the lightning network and autopay",
+                image: "https://i.ibb.co/1MG0sh9/b-for-book-image.png",
+                link: "https://github.com/supertestnet/b_for_book",
+            },{
+                name: "UTXO Dealership",
+                desc: "UTXO dealership is a privacy tool for bitcoin. It enables bitcoin miners to easily sell their freshly mined utxos for a premium, and it enables bitcoiners to acquire decent privacy simply by visiting a website and buying a history-free utxo.",
+                image: "https://i.ibb.co/4Ysj2HQ/utxo-dealership-image.png",
+                link: "https://github.com/supertestnet/utxo-dealership/",
+            },{
+                name: "Magic Webstore",
+                desc: "A simple bitcoin webstore with whisper addresses for enhanced privacy",
+                image: "https://i.ibb.co/6nt6NQF/magic-webstore-image-2.png",
+                link: "https://github.com/supertestnet/superstore",
+            },{
+                name: "Tapleaf Circuits",
+                desc: "A proof-of-concept implementation of BitVM for bristol circuits",
+                image: "https://i.ibb.co/b6M2G2z/run-bitvm-image.png",
+                link: "https://github.com/supertestnet/tapleaf-circuits",
+            },{
+                name: "8bit cpu for bitvm",
+                desc: "Write bitvm programs without learning circuit diagrams",
+                image: "https://i.ibb.co/xshRzsZ/bitvm-8bit-cpu.png",
+                link: "https://github.com/supertestnet/8bit-cpu-for-bitvm",
+            },{
+                name: "Time til next block",
+                desc: "A progress bar counting milestones on the way to the next bitcoin block ",
+                image: "https://i.ibb.co/P1mZksw/ttlb-image.png",
+                link: "https://github.com/supertestnet/time-til-next-block",
+            },{
+                name: "Nostr image host",
+                desc: "Upload and view images on the web without an api key",
+                image: "https://i.ibb.co/2Wv69v4/nostr-image-host-image.png",
+                link: "https://github.com/supertestnet/nostr-image-host",
+            },{
+                name: "Build your first nostr app",
+                desc: "This is Course 4 of the Nostr Dev Course. In it I walk you through the process of making your first nostr app",
+                image: "https://i3.ytimg.com/vi/4qOVxq9lUbs/hqdefault.jpg",
+                link: "https://www.youtube.com/watch?v=4qOVxq9lUbs",
+            },{
+                name: "Reddit Clone Part 1 by Super Testnet",
+                desc: "This is Section 8.1 of the Nostr Dev course. In it I walk you through how I would go about starting a Reddit Clone using nostr",
+                image: "https://i3.ytimg.com/vi/IAK0mrY2_Ew/hqdefault.jpg",
+                link: "https://www.youtube.com/watch?v=IAK0mrY2_Ew",
+            },{
+                name: "Reddit Clone Part 2 by Super Testnet",
+                desc: "This is Course 8.2 of the Nostr Dev Course. In it I bring my nostr-based Reddit clone nearer to completion and then leave you with some low hanging fruit if you want to bring it the rest of the way",
+                image: "https://i3.ytimg.com/vi/3Pv940IEvTA/hqdefault.jpg",
+                link: "https://www.youtube.com/watch?v=3Pv940IEvTA",
+            },{
+                name: "Crash Course in Bitcoin Script",
+                desc: "This video covers how bitcoin script works and teaches you to write your first bitcoin smart contract",
+                image: "https://i3.ytimg.com/vi/4WIcDnqrvbQ/hqdefault.jpg",
+                link: "https://www.youtube.com/watch?v=4WIcDnqrvbQ",
+            },{
+                name: "How bitvm works: from logic gates to an 8bit cpu for bitcoin",
+                desc: "In this video I outline how bitvm works and illustrate how we can use it to run programs written in Assembly on bitcoin",
+                image: "https://i3.ytimg.com/vi/IRU83gRcw3Y/hqdefault.jpg",
+                link: "https://www.youtube.com/watch?v=IRU83gRcw3Y",
+            },{
+                name: "How bitvm works: from logic gates to an 8bit cpu for bitcoin",
+                desc: "In this video I outline how bitvm works and illustrate how we can use it to run programs written in Assembly on bitcoin",
+                image: "https://i3.ytimg.com/vi/IRU83gRcw3Y/hqdefault.jpg",
+                link: "https://www.youtube.com/watch?v=IRU83gRcw3Y",
+            }];
+            shuffle(projects);
+            projects.forEach( item => {
+                var html = `
+                    <a class="project" href="${item.link}" target="_blank">
+                        <div class="project_image_and_name">
+                            <div class="project_nym">${item.name}</div>
+                        </div>
+                        <div class="project_desc">${item.desc}</div>
+                    </a>
+                `;
+                var div = document.createElement( "div" );
+                div.innerHTML = html;
+                div = div.firstElementChild;
+                div.getElementsByClassName( "project_image_and_name" )[ 0 ].style.backgroundImage = `url( "${item.image}" )`;
+                $( '.projects' ).append( div );
+            });
+        </script>
+    </body>
+</html>
