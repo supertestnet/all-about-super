@@ -95,19 +95,15 @@
         <script>
             var shuffle = array => {
               let currentIndex = array.length,  randomIndex;
-
               // While there remain elements to shuffle.
               while (currentIndex > 0) {
-
                 // Pick a remaining element.
                 randomIndex = Math.floor(Math.random() * currentIndex);
                 currentIndex--;
-
                 // And swap it with the current element.
                 [array[currentIndex], array[randomIndex]] = [
                   array[randomIndex], array[currentIndex]];
               }
-
               return array;
             }
             var projects = [{
@@ -451,7 +447,11 @@
                 desc: "How to install LNBits, how to connect it to a funding source, and how extensions work",
                 image: "https://i3.ytimg.com/vi/RraYvLeqXAw/hqdefault.jpg",
                 link: "https://www.youtube.com/watch?v=RraYvLeqXAw",
-                category: "education",ufault.jpg",
+                category: "education",
+            },{
+                name: "Bitcoin as an alternative to tokenomics",
+                desc: "Not just why bitcoin is better than altcoins but also demos of how to recreate common altcoin features on bitcoin",
+                image: "https://i3.ytimg.com/vi/vMZl8GzQouw/hqdefault.jpg",
                 link: "https://www.youtube.com/watch?v=vMZl8GzQouw",
                 category: "education",
             },{
