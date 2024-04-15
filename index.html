@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <script>
             if ( window.location.protocol.includes( "http:" ) ) {
-                var arr = [ "https", ...window.location.href.split( "http" ) ];
+                var arr = [ "https:", ...window.location.href.split( "http:" ) ];
                 arr.splice( 1, 1 )
                 var url = arr.join( "" );
                 window.location.href = url;
