@@ -6,7 +6,7 @@
         <script>
             if ( window.location.protocol.includes( "http:" ) ) {
                 var arr = [ "https:", ...window.location.href.split( "http:" ) ];
-                arr.splice( 1, 1 )
+                arr.splice( 1, 1 );
                 var url = arr.join( "" );
                 window.location.href = url;
             }
