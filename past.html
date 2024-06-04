@@ -139,6 +139,7 @@
         <script>
             var option = "all";
             if ( $_GET[ "option" ] ) option = $_GET[ "option" ];
+            if ( !( option in opts ) ) option = "all";
             $$( '.buybox .option_pic' ).forEach( item => {
                 item.style.height = String( item.offsetWidth * 9 / 16 ) + "px";
             });
