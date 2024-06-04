@@ -3,7 +3,42 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no">
-        <title>Past Workshops</title>
+        <script>
+            var opts = {
+                all: {
+                    title: "Past workshops",
+                    paid_img: 'https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg',
+                    free_img: 'https://i.ibb.co/H40tNZB/arms-raised.png',
+                    paid_url: 'https://shopstr.store/listing/90dbbcd048d95f7ef4ea0b8d099491983831a92f17aa3b72eee0b49cbcf5f851',
+                    free_url: 'https://www.youtube.com/playlist?list=PLP7B5SmUZUT9H1pcQxEZkCqOQ08WPsBsd',
+                    price: 20,
+                    desc: `
+                        <p>Purchase my workshops and I will send you a link to an unlisted youtube playlist containing a set of workshops where you will learn to write code for bitcoin projects by doing build-alongs with me. The playlist includes the following workshops:</p>
+                        <ul>
+                            <li>Nostr (build your first nostr client)</li>
+                            <li>Cashu workshop (write a basic cashu wallet)</li>
+                            <li>Bitcoin script (make your first bitcoin smart contract)</li>
+                            <li>Bitvm (build tit tac toe in bitvm)</li>
+                            <li>Lnbits (get it running and use its api)</li>
+                            <li>Coinjoin (build your own coinjoin software)</li>
+                            <li>Bisq (how to use it to buy bitcoin without KYC)</li>
+                        </ul>
+                    `,
+                },
+                bitcoin_script: {
+                    title: "Bitcoin script workshop",
+                    paid_img: 'https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg',
+                    free_img: 'https://i.ibb.co/H40tNZB/arms-raised.png',
+                    paid_url: 'https://shopstr.store/listing/0919f2f0f1567477035f4c2d3877f03eb82f32c109a6151e073333bbd8bf77e6',
+                    free_url: 'https://www.youtube.com/watch?v=4WIcDnqrvbQ',
+                    price: 5,
+                    desc: `
+                        <p>Learn how bitcoin script works and write your first bitcoin smart contract: a ballgame contract where Alice and Bob send one another a conditional payment that only goes through depending on the outcome of a ballgame, as decided by a third party oracle.</p>
+                    `,
+                }
+            }
+        </script>
+        <title>Past workshops</title>
         <style>
             * {
                 box-sizing: border-box;
@@ -70,37 +105,28 @@
         </script>
     </head>
     <body>
-        <h1>Past workshops</h1>
-        <p>Purchase my workshops and I will send you a link to an unlisted youtube playlist containing a set of workshops where you will learn to write code for bitcoin projects by doing build-alongs with me. The playlist includes the following workshops:</p>
-        <ul>
-            <li>Nostr (build your first nostr client)</li>
-            <li>Cashu workshop (write a basic cashu wallet)</li>
-            <li>Bitcoin script (make your first bitcoin smart contract)</li>
-            <li>Bitvm (build tit tac toe in bitvm)</li>
-            <li>Lnbits (get it running and use its api)</li>
-            <li>Coinjoin (build your own coinjoin software)</li>
-            <li>Bisq (how to use it to buy bitcoin without KYC)</li>
-        </ul>
+        <h1 class="title"></h1>
+        <div class="desc_div"></div>
         <h2>Two options</h2>
         <div class="buyboxes">
             <div class="buybox">
                 <div class="option_title">
                     Paid version
                 </div>
-                <div class="option_pic" style="background-image: url('https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg');"></div>
+                <div class="option_pic"></div>
                 <div class="option_desc_label">Description</div>
                 <div class="option_desc">
                     The exact same thing as the free version except this way you're supporting me monetarily
                 </div>
                 <div class="option_button">
-                    <a href="https://shopstr.store/listing/72387902704be4ad967d11a4cb6d8eb86c651d2779c3f97b2c880442936d4b39" target="_blank"><button>$20.00</button></a>
+                    <a target="_blank"><button>$20.00</button></a>
                 </div>
             </div>
             <div class="buybox">
                 <div class="option_title">
                     Free version
                 </div>
-                <div class="option_pic" style="background-image: url('https://i.ibb.co/H40tNZB/arms-raised.png');"></div>
+                <div class="option_pic"></div>
                 <div class="option_desc_label">Description</div>
                 <div class="option_desc">
                     The exact same thing as the paid version except this way you get it for no cost at all
@@ -111,15 +137,28 @@
             </div>
         </div>
         <script>
+            var option = "all";
+            if ( $_GET[ "option" ] ) option = $_GET[ "option" ];
             $$( '.buybox .option_pic' ).forEach( item => {
                 item.style.height = String( item.offsetWidth * 9 / 16 ) + "px";
             });
+            $( 'title' ).innerText = opts[ option ][ "title" ];
+            $( '.title' ).innerText = opts[ option ][ "title" ];
+            $( '.desc_div' ).innerHTML = opts[ option ][ "desc" ];
+            $$( '.buybox' ).forEach( ( item, index ) => {
+                var img = opts[ option ][ "paid_img" ];
+                if ( index ) img = opts[ option ][ "free_img" ];
+                item.getElementsByClassName( "option_pic" )[ 0 ].style.backgroundImage = `url( '${img}' )`;
+                var url = opts[ option ][ "paid_url" ];
+                if ( !index ) item.getElementsByClassName( "option_button" )[ 0 ].getElementsByTagName( "a" )[ 0 ].href = url;
+                var price = opts[ option ][ "price" ].toFixed( 2 );
+                if ( !index ) item.getElementsByClassName( "option_button" )[ 0 ].getElementsByTagName( "button" )[ 0 ].innerText = `$${price}`;
+            });
             var showFree = () => {
-                $( 'p' ).remove();
-                $( 'ul' ).remove();
+                $( '.desc_div' ).remove();
                 $( 'h2' ).remove();
                 $( '.buyboxes' ).innerHTML = `
-                    <p><a href="https://www.youtube.com/playlist?list=PLP7B5SmUZUT9H1pcQxEZkCqOQ08WPsBsd" target="_blank">Here you go</a></p><p>Please support me monetarily some other time</p>
+                    <p><a href="${opts[ option ][ "free_url" ]}" target="_blank">Here you go</a></p><p>Please support me monetarily some other time</p>
                 `;
             }
         </script>
