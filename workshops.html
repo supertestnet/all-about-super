@@ -29,7 +29,7 @@
                     title: "Bitcoin script workshop",
                     paid_img: 'https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg',
                     free_img: 'https://i.ibb.co/H40tNZB/arms-raised.png',
-                    paid_url: 'https://shopstr.store/listing/0919f2f0f1567477035f4c2d3877f03eb82f32c109a6151e073333bbd8bf77e6',
+                    paid_url: 'https://shopstr.store/listing/af9cf6815f7c85ec701ece9b675afa582bbcd80dcd45eaeae990acaf20579aec',
                     free_url: 'https://www.youtube.com/watch?v=4WIcDnqrvbQ',
                     price: 5,
                     desc: `
@@ -38,7 +38,7 @@
                 }
             }
         </script>
-        <title>Past workshops</title>
+        <title>Workshops</title>
         <style>
             * {
                 box-sizing: border-box;
@@ -68,6 +68,22 @@
                 font-size: 1.15rem;
                 border: 1px solid grey;
             }
+            .upcoming_box, .upcoming_image_box {
+                width: 100%;
+                max-width: 697px;
+                padding: 10px;
+                border: 1px solid black;
+                border-radius: 10px;
+            }
+            .upcoming_image_box {
+                float: right;
+                max-width: 210px;
+            }
+            .upcoming_image {
+                width: 100%;
+                max-width: 200px;
+                float: right;
+            }
             .buyboxes {
                 text-align: center;
             }
@@ -93,6 +109,10 @@
                 margin: .4rem;
             }
             @media screen and (max-width: 600px) {
+                .upcoming_box, .upcoming_image_box, .upcoming_image {
+                    float: none;
+                    max-width: none;
+                }
             }
         </style>
         <script>
@@ -105,6 +125,18 @@
         </script>
     </head>
     <body>
+        <div class="upcoming">
+            <h1>Upcoming workshop</h1>
+            <div class="upcoming_box">
+                <div class="upcoming_image_box"><img class="upcoming_image"></div>
+                <p>Topic: <span class="what"></span></p>
+                <p>When: <span class="when"></span></p>
+                <p>Format: <span class="format">Live streamed via Jitsi video streaming platform</span></p>
+                <p>Cost: <span class="cost">$20.00</span></p>
+                <p>Description: <span class="desc"></span></p>
+                <p><a class="buy_ticket" target="_blank"><button>Buy a ticket</button></a> <a class="buy_video" target="_blank"><button>Buy a past recording</button></a></p>
+            </div>
+        </div>
         <h1 class="title"></h1>
         <div class="desc_div"></div>
         <h2>Two options</h2>
@@ -137,13 +169,41 @@
             </div>
         </div>
         <script>
+            var workshops = {
+                June: {
+                    title: "Bitcoin Script",
+                    desc: "Learn how bitcoin script works and write your first bitcoin smart contract: a ballgame contract where Alice and Bob send one another a conditional payment that only goes through depending on the outcome of a ballgame, as decided by a third party oracle.",
+                    ticket: "https://shopstr.store/listing/4c1699c53057bce39f1165ff7d9291097c10f526558d47195e4ce45bf5406b32",
+                    past: "https://supertestnet.org/workshops.html?option=bitcoin_script",
+                    image: "https://i.ibb.co/H40tNZB/arms-raised.png",
+                },
+            }
+            var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            var current_month = months[ ( new Date ).getMonth() ];
+            var next_month = months[ ( new Date ).getMonth() + 1 ];
+            if ( !next_month ) next_month = "January";
+            var current_day = ( new Date ).getDate();
+            if ( current_day < 25 ) var month = current_month;
+            else var month = next_month;
+            var date_of_next_workshop = `${month} 25 at 7:00 pm New York City time`;
+            $( '.upcoming_image' ).src = workshops[ month ][ "image" ];
+            $( '.what' ).innerText = workshops[ month ][ "title" ];
+            $( '.when' ).innerText = date_of_next_workshop;
+            $( '.desc' ).innerText = workshops[ month ][ "desc" ];
+            $( '.buy_ticket' ).href = workshops[ month ][ "ticket" ];
+            $( '.buy_video' ).href = workshops[ month ][ "past" ];
+
+            //PAST WORKSHOPS
             var option = "all";
             if ( $_GET[ "option" ] ) option = $_GET[ "option" ];
             if ( !( option in opts ) ) option = "all";
             $$( '.buybox .option_pic' ).forEach( item => {
                 item.style.height = String( item.offsetWidth * 9 / 16 ) + "px";
             });
-            $( 'title' ).innerText = opts[ option ][ "title" ];
+            if ( $_GET[ "option" ] ) {
+                $( 'title' ).innerText = opts[ option ][ "title" ];
+                $( '.upcoming' ).remove();
+            }
             $( '.title' ).innerText = opts[ option ][ "title" ];
             $( '.desc_div' ).innerHTML = opts[ option ][ "desc" ];
             $$( '.buybox' ).forEach( ( item, index ) => {
@@ -156,6 +216,7 @@
                 if ( !index ) item.getElementsByClassName( "option_button" )[ 0 ].getElementsByTagName( "button" )[ 0 ].innerText = `$${price}`;
             });
             var showFree = () => {
+                $( '.upcoming' ).remove();
                 $( '.desc_div' ).remove();
                 $( 'h2' ).remove();
                 $( '.buyboxes' ).innerHTML = `
