@@ -89,6 +89,63 @@
                     upcoming_image: "https://i.ibb.co/H40tNZB/arms-raised.png",
                     sales_image: "https://i3.ytimg.com/vi/kqbpT4JjqDo/hqdefault.jpg",
                 },
+                bitvm: {
+                    title: "Bitvm workshop (build Tic Tac Toe)",
+                    paid_img: 'https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg',
+                    free_img: 'https://i.ibb.co/H40tNZB/arms-raised.png',
+                    paid_url: 'https://shopstr.store/listing/73f958cec434f3af47c2dd0838110aab442e5df47c72b9cc2e7d8b503aa7522c',
+                    free_url: 'https://www.youtube.com/watch?v=LwH9fhY4uGA',
+                    price: 5,
+                    html_desc: `
+                        <p>Learn how to write software for bitvm by building an implementation and running Tic Tac Toe in it.</p>
+                    `,
+                    desc: `Learn how to write software for bitvm by building an implementation and running Tic Tac Toe in it.`,
+                    ticket: "https://shopstr.store/listing/4c1699c53057bce39f1165ff7d9291097c10f526558d47195e4ce45bf5406b32",
+                    past: "./workshops.html?option=bitvm",
+                    upcoming_image: "https://i.ibb.co/H40tNZB/arms-raised.png",
+                    sales_image: "https://i.ibb.co/yRXgg6j/bitvm-workshop-image.png",
+                },
+                lnbits: {
+                    title: "LNBits workshop",
+                    paid_img: 'https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg',
+                    free_img: 'https://i.ibb.co/H40tNZB/arms-raised.png',
+                    paid_url: 'https://shopstr.store/listing/b4705e170f3cbd4e7380ddd6cea089f0274dd0233445cb0af8fbd793f319a2d2',
+                    free_url: 'https://www.youtube.com/watch?v=RraYvLeqXAw',
+                    price: 5,
+                    html_desc: `
+                        <p>Learn how to install LNBits, how to connect it to a funding source, and how extensions work.</p>
+                    `,
+                    desc: `Learn how to install LNBits, how to connect it to a funding source, and how extensions work.`,
+                    ticket: "https://shopstr.store/listing/4c1699c53057bce39f1165ff7d9291097c10f526558d47195e4ce45bf5406b32",
+                    past: "./workshops.html?option=lnbits",
+                    upcoming_image: "https://i.ibb.co/H40tNZB/arms-raised.png",
+                    sales_image: "https://i3.ytimg.com/vi/RraYvLeqXAw/hqdefault.jpg",
+                },
+                coinjoin: {
+                    title: "Coinjoin workshop (aka Building Emessbee)",
+                    paid_img: 'https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg',
+                    free_img: 'https://i.ibb.co/H40tNZB/arms-raised.png',
+                    paid_url: 'https://shopstr.store/listing/8f0c0243c6d9b0f1202bbebc60283aae7d35f12b059461ec00229300b1fd2222',
+                    free_url: 'https://www.youtube.com/watch?v=MT0CfuH7upE',
+                    price: 5,
+                    html_desc: `
+                        <p>Learn how to write coinjoin software utilizing Super Testnet's Emessbee protocol, where coinjoins happen without the help of a coordinator.</p>
+                    `,
+                    desc: `Learn how to write coinjoin software utilizing Super Testnet's Emessbee protocol, where coinjoins happen without the help of a coordinator.`,
+                    ticket: "https://shopstr.store/listing/4c1699c53057bce39f1165ff7d9291097c10f526558d47195e4ce45bf5406b32",
+                    past: "./workshops.html?option=coinjoin",
+                    upcoming_image: "https://i.ibb.co/H40tNZB/arms-raised.png",
+                    sales_image: "https://supertestnet.github.io/coinjoin-workshop/emessbee-demo-with-yt-logo.jpg",
+                },
+            }
+            var schedule = {
+                June: workshops[ "bitcoin_script" ],
+                July: workshops[ "nostr" ],
+                August: workshops[ "cashu" ],
+                September: workshops[ "bisq" ],
+                October: workshops[ "bitvm" ],
+                November: workshops[ "lnbits" ],
+                December: workshops[ "coinjoin" ],
             }
         </script>
         <title>Workshops</title>
@@ -232,12 +289,7 @@
             </div>
         </div>
         <script>
-            var schedule = {
-                June: workshops[ "bitcoin_script" ],
-                July: workshops[ "nostr" ],
-                August: workshops[ "cashu" ],
-                September: workshops[ "bisq" ],
-            }
+            //UPCOMING WORKSHOPS
             var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
             var current_month = months[ ( new Date ).getMonth() ];
             var next_month = months[ ( new Date ).getMonth() + 1 ];
@@ -253,7 +305,7 @@
             $( '.buy_ticket' ).href = schedule[ month ][ "ticket" ];
             $( '.buy_video' ).href = schedule[ month ][ "past" ];
 
-            //ALL WORKSHOPS
+            //ALL UPCOMING WORKSHOPS
             Object.keys( workshops ).forEach( workshop => {
                 if ( workshop === "all" ) return;
                 var learnbox_html = `
