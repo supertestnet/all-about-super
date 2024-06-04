@@ -15,13 +15,13 @@
                     html_desc: `
                         <p>Purchase my workshops and I will send you a link to an unlisted youtube playlist containing a set of workshops where you will learn to write code for bitcoin projects by doing build-alongs with me. The playlist includes the following workshops:</p>
                         <ul>
+                            <li>Bitcoin script (make your first bitcoin smart contract)</li>
                             <li>Nostr (build your first nostr client)</li>
                             <li>Cashu workshop (write a basic cashu wallet)</li>
-                            <li>Bitcoin script (make your first bitcoin smart contract)</li>
+                            <li>Bisq (how to use it to buy bitcoin without KYC)</li>
                             <li>Bitvm (build tit tac toe in bitvm)</li>
                             <li>Lnbits (get it running and use its api)</li>
                             <li>Coinjoin (build your own coinjoin software)</li>
-                            <li>Bisq (how to use it to buy bitcoin without KYC)</li>
                         </ul>
                     `,
                 },
@@ -121,6 +121,9 @@
                 font-size: 1.15rem;
                 border: 1px solid grey;
             }
+            .hidden {
+                display: none;
+            }
             .upcoming_box, .upcoming_image_box {
                 width: 100%;
                 max-width: 700px;
@@ -195,6 +198,10 @@
         </div>
         <h1 class="title"></h1>
         <div class="desc_div"></div>
+        <div class="upcoming_info hidden">
+            <p>This workshop will be presented live on <span class="alt_when"></span></p>
+            <p><a class="alt_buy_ticket" target="_blank"><button>Buy a ticket</button></a></p>
+        </div>
         <h2>Two options</h2>
         <div class="buyboxes">
             <div class="buybox">
@@ -263,7 +270,10 @@
                 learnbox.innerHTML = learnbox_html;
                 learnbox.getElementsByClassName( "option_title" )[ 0 ].innerText = workshops[ workshop ][ "title" ];
                 learnbox.getElementsByClassName( "option_pic" )[ 0 ].style.backgroundImage = `url( '${workshops[ workshop ][ "sales_image" ]}' )`;
-                learnbox.getElementsByClassName( "option_desc" )[ 0 ].innerText = workshops[ workshop ][ "desc" ].substring( 0, 60 ) + "...";
+                var lildesc = workshops[ workshop ][ "desc" ].substring( 0, 60 );
+                if ( lildesc.endsWith( " " ) ) lildesc = workshops[ workshop ][ "desc" ].substring( 0, 59 );
+                lildesc = lildesc + "...";
+                learnbox.getElementsByClassName( "option_desc" )[ 0 ].innerText = lildesc;
                 learnbox.getElementsByTagName( "a" )[ 0 ].href = workshops[ workshop ][ "past" ];
                 $( '.all_div' ).append( learnbox );
             });
@@ -278,6 +288,13 @@
             if ( $_GET[ "option" ] ) {
                 $( 'title' ).innerText = workshops[ option ][ "title" ];
                 $( '.upcoming' ).remove();
+                $( 'h2' ).innerText = "Buy a past recording";
+                if ( schedule[ month ][ "title" ] === workshops[ option ][ "title" ] ) {
+                    $( '.upcoming_info' ).classList.remove( "hidden" );
+                    $( '.alt_when' ).innerText = date_of_next_workshop;
+                    $( '.alt_buy_ticket' ).href = schedule[ month ][ "ticket" ];
+                    $( 'h2' ).innerText = "Or buy a past recording";
+                }
             }
             $( '.title' ).innerText = workshops[ option ][ "title" ];
             $( '.desc_div' ).innerHTML = workshops[ option ][ "html_desc" ];
@@ -293,6 +310,7 @@
             var showFree = () => {
                 if ( $( '.upcoming' ) ) $( '.upcoming' ).remove();
                 $( '.desc_div' ).remove();
+                $( '.upcoming_info' ).remove();
                 $( 'h2' ).remove();
                 $( '.buyboxes' ).innerHTML = `
                     <p><a href="${workshops[ option ][ "free_url" ]}" target="_blank">Here you go</a></p><p>Please support me monetarily some other time</p>
