@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <script>
-            var opts = {
+            var workshops = {
                 all: {
                     title: "Past workshops",
                     paid_img: 'https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg',
@@ -35,11 +35,60 @@
                     html_desc: `
                         <p>Learn how bitcoin script works and write your first bitcoin smart contract: a ballgame contract where Alice and Bob send one another a conditional payment that only goes through depending on the outcome of a ballgame, as decided by a third party oracle.</p>
                     `,
-                    desc: 'Learn how bitcoin script works and write your first bitcoin smart contract: a ballgame contract where Alice and Bob send one another a conditional payment that only goes through depending on the outcome of a ballgame, as decided by a third party oracle.',
+                    desc: `Learn how bitcoin script works and write your first bitcoin smart contract: a ballgame contract where Alice and Bob send one another a conditional payment that only goes through depending on the outcome of a ballgame, as decided by a third party oracle.`,
                     ticket: "https://shopstr.store/listing/4c1699c53057bce39f1165ff7d9291097c10f526558d47195e4ce45bf5406b32",
-                    past: "https://supertestnet.org/workshops.html?option=bitcoin_script",
+                    past: "./workshops.html?option=bitcoin_script",
                     upcoming_image: "https://i.ibb.co/H40tNZB/arms-raised.png",
-                }
+                    sales_image: "https://i.ibb.co/qD4Bdz4/learn-btc-script-image.png",
+                },
+                nostr: {
+                    title: "Nostr workshop",
+                    paid_img: 'https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg',
+                    free_img: 'https://i.ibb.co/H40tNZB/arms-raised.png',
+                    paid_url: 'https://shopstr.store/listing/7db27c57ae228c3302612b09027c0e4aaf603ad8d8e5a439d23193a48af74a81',
+                    free_url: 'https://www.youtube.com/watch?v=HbicnlCXg_Y',
+                    price: 5,
+                    html_desc: `
+                        <p>Learn how to write your first application using the nostr message protocol.</p>
+                    `,
+                    desc: `Learn how to write your first application using the nostr message protocol.`,
+                    ticket: "https://shopstr.store/listing/4c1699c53057bce39f1165ff7d9291097c10f526558d47195e4ce45bf5406b32",
+                    past: "./workshops.html?option=nostr",
+                    upcoming_image: "https://i.ibb.co/H40tNZB/arms-raised.png",
+                    sales_image: "https://i3.ytimg.com/vi/HbicnlCXg_Y/hqdefault.jpg",
+                },
+                cashu: {
+                    title: "Cashu workshop",
+                    paid_img: 'https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg',
+                    free_img: 'https://i.ibb.co/H40tNZB/arms-raised.png',
+                    paid_url: 'https://shopstr.store/listing/f92e9597c470f34f6332dc29e96c739a048988c599a87e0e3f27960b9a01ebdd',
+                    free_url: 'https://www.youtube.com/watch?v=xfYmwc-gnK8',
+                    price: 5,
+                    html_desc: `
+                        <p>Learn how chaumian ecash works and create a toy implementation of a cashu enabled wallet.</p>
+                    `,
+                    desc: `Learn how chaumian ecash works and create a toy implementation of a cashu enabled wallet.`,
+                    ticket: "https://shopstr.store/listing/4c1699c53057bce39f1165ff7d9291097c10f526558d47195e4ce45bf5406b32",
+                    past: "./workshops.html?option=cashu",
+                    upcoming_image: "https://i.ibb.co/H40tNZB/arms-raised.png",
+                    sales_image: "https://i.ibb.co/VwM2q8m/cashu-workshop-thumbnail.jpg",
+                },
+                bisq: {
+                    title: "Bisq workshop",
+                    paid_img: 'https://i3.ytimg.com/vi/xnkgvaCgLTQ/hqdefault.jpg',
+                    free_img: 'https://i.ibb.co/H40tNZB/arms-raised.png',
+                    paid_url: 'https://shopstr.store/listing/34ec4d2129a0cc1b5138500cc252f529fc58ee9994904f3822a4a240f3a6e961',
+                    free_url: 'https://www.youtube.com/watch?v=kqbpT4JjqDo',
+                    price: 5,
+                    html_desc: `
+                        <p>Learn how privately and securely Bisq's peer-to-peer network and open-source desktop software operates, and actually use it to make your first KYC free bitcoin purchase.</p>
+                    `,
+                    desc: `Learn how privately and securely Bisq's peer-to-peer network and open-source desktop software operates, and actually use it to make your first KYC free bitcoin purchase.`,
+                    ticket: "https://shopstr.store/listing/4c1699c53057bce39f1165ff7d9291097c10f526558d47195e4ce45bf5406b32",
+                    past: "./workshops.html?option=bisq",
+                    upcoming_image: "https://i.ibb.co/H40tNZB/arms-raised.png",
+                    sales_image: "https://i3.ytimg.com/vi/kqbpT4JjqDo/hqdefault.jpg",
+                },
             }
         </script>
         <title>Workshops</title>
@@ -88,10 +137,10 @@
                 max-width: 200px;
                 float: right;
             }
-            .buyboxes {
+            .buyboxes, .all_div {
                 text-align: center;
             }
-            .buybox {
+            .buybox, .learnbox {
                 display: inline-block;
                 vertical-align: top;
                 width: 100%;
@@ -101,15 +150,16 @@
                 padding: 1rem;
                 margin: .5rem;
             }
-            .buybox .option_pic {
+            .option_pic {
                 width: 100%;
                 background-size: cover;
                 background-position: 50% 50%;
             }
-            .buybox .option_desc_label, .buybox .option_title {
+            .option_desc_label, .option_title {
                 font-weight: bold;
+                margin: .4rem;
             }
-            .buybox .option_title, .buybox .option_desc, .buybox .option_desc_label {
+            .option_desc {
                 margin: .4rem;
             }
             @media screen and (max-width: 600px) {
@@ -140,6 +190,8 @@
                 <p>Description: <span class="desc"></span></p>
                 <p><a class="buy_ticket" target="_blank"><button>Buy a ticket</button></a> <a class="buy_video" target="_blank"><button>Buy a past recording</button></a></p>
             </div>
+            <h1>All upcoming workshops</h1>
+            <div class="all_div"></div>
         </div>
         <h1 class="title"></h1>
         <div class="desc_div"></div>
@@ -173,8 +225,11 @@
             </div>
         </div>
         <script>
-            var workshops = {
-                June: opts[ "bitcoin_script" ],
+            var schedule = {
+                June: workshops[ "bitcoin_script" ],
+                July: workshops[ "nostr" ],
+                August: workshops[ "cashu" ],
+                September: workshops[ "bisq" ],
             }
             var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
             var current_month = months[ ( new Date ).getMonth() ];
@@ -184,33 +239,55 @@
             if ( current_day < 25 ) var month = current_month;
             else var month = next_month;
             var date_of_next_workshop = `${month} 25 at 7:00 pm New York City time`;
-            $( '.upcoming_image' ).src = workshops[ month ][ "upcoming_image" ];
-            $( '.what' ).innerText = workshops[ month ][ "title" ];
+            $( '.upcoming_image' ).src = schedule[ month ][ "upcoming_image" ];
+            $( '.what' ).innerText = schedule[ month ][ "title" ];
             $( '.when' ).innerText = date_of_next_workshop;
-            $( '.desc' ).innerText = workshops[ month ][ "desc" ];
-            $( '.buy_ticket' ).href = workshops[ month ][ "ticket" ];
-            $( '.buy_video' ).href = workshops[ month ][ "past" ];
+            $( '.desc' ).innerText = schedule[ month ][ "desc" ];
+            $( '.buy_ticket' ).href = schedule[ month ][ "ticket" ];
+            $( '.buy_video' ).href = schedule[ month ][ "past" ];
+
+            //ALL WORKSHOPS
+            Object.keys( workshops ).forEach( workshop => {
+                if ( workshop === "all" ) return;
+                var learnbox_html = `
+                    <div class="option_title"></div>
+                    <div class="option_pic"></div>
+                    <div class="option_desc_label">Description</div>
+                    <div class="option_desc"></div>
+                    <div class="option_button">
+                        <a target="_blank"><button>Learn more</button></a>
+                    </div>
+                `;
+                var learnbox = document.createElement( "div" );
+                learnbox.classList.add( "learnbox" );
+                learnbox.innerHTML = learnbox_html;
+                learnbox.getElementsByClassName( "option_title" )[ 0 ].innerText = workshops[ workshop ][ "title" ];
+                learnbox.getElementsByClassName( "option_pic" )[ 0 ].style.backgroundImage = `url( '${workshops[ workshop ][ "sales_image" ]}' )`;
+                learnbox.getElementsByClassName( "option_desc" )[ 0 ].innerText = workshops[ workshop ][ "desc" ].substring( 0, 60 ) + "...";
+                learnbox.getElementsByTagName( "a" )[ 0 ].href = workshops[ workshop ][ "past" ];
+                $( '.all_div' ).append( learnbox );
+            });
 
             //PAST WORKSHOPS
             var option = "all";
             if ( $_GET[ "option" ] ) option = $_GET[ "option" ];
-            if ( !( option in opts ) ) option = "all";
-            $$( '.buybox .option_pic' ).forEach( item => {
+            if ( !( option in workshops ) ) option = "all";
+            $$( '.option_pic' ).forEach( item => {
                 item.style.height = String( item.offsetWidth * 9 / 16 ) + "px";
             });
             if ( $_GET[ "option" ] ) {
-                $( 'title' ).innerText = opts[ option ][ "title" ];
+                $( 'title' ).innerText = workshops[ option ][ "title" ];
                 $( '.upcoming' ).remove();
             }
-            $( '.title' ).innerText = opts[ option ][ "title" ];
-            $( '.desc_div' ).innerHTML = opts[ option ][ "html_desc" ];
+            $( '.title' ).innerText = workshops[ option ][ "title" ];
+            $( '.desc_div' ).innerHTML = workshops[ option ][ "html_desc" ];
             $$( '.buybox' ).forEach( ( item, index ) => {
-                var img = opts[ option ][ "paid_img" ];
-                if ( index ) img = opts[ option ][ "free_img" ];
+                var img = workshops[ option ][ "paid_img" ];
+                if ( index ) img = workshops[ option ][ "free_img" ];
                 item.getElementsByClassName( "option_pic" )[ 0 ].style.backgroundImage = `url( '${img}' )`;
-                var url = opts[ option ][ "paid_url" ];
+                var url = workshops[ option ][ "paid_url" ];
                 if ( !index ) item.getElementsByClassName( "option_button" )[ 0 ].getElementsByTagName( "a" )[ 0 ].href = url;
-                var price = opts[ option ][ "price" ].toFixed( 2 );
+                var price = workshops[ option ][ "price" ].toFixed( 2 );
                 if ( !index ) item.getElementsByClassName( "option_button" )[ 0 ].getElementsByTagName( "button" )[ 0 ].innerText = `$${price}`;
             });
             var showFree = () => {
@@ -218,7 +295,7 @@
                 $( '.desc_div' ).remove();
                 $( 'h2' ).remove();
                 $( '.buyboxes' ).innerHTML = `
-                    <p><a href="${opts[ option ][ "free_url" ]}" target="_blank">Here you go</a></p><p>Please support me monetarily some other time</p>
+                    <p><a href="${workshops[ option ][ "free_url" ]}" target="_blank">Here you go</a></p><p>Please support me monetarily some other time</p>
                 `;
             }
         </script>
