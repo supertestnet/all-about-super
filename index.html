@@ -253,7 +253,7 @@
                 var a = document.createElement( "a" );
                 a.href = url;
                 a.target = "_blank";
-                a.append( createQR( url.toUpperCase() ) );
+                a.append( createQR( bl_address.toUpperCase() ) );
                 var prep_div = document.createElement( "div" );
                 prep_div.append( a );
                 var div_html = prep_div.innerHTML;
@@ -302,7 +302,7 @@
                     var a = document.createElement( "a" );
                     a.href = url;
                     a.target = "_blank";
-                    a.append( createQR( url.toUpperCase() ) );
+                    a.append( createQR( invoice.toUpperCase() ) );
                     var prep_div = document.createElement( "div" );
                     prep_div.append( a );
                     var div_html = prep_div.innerHTML;
