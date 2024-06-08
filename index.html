@@ -245,8 +245,10 @@
                 <p><button class="submit_ln" onclick="submitLN();">Submit</button></p>
             </div>
             <script>
+                var bl_address = "bc1qefhunyf8rsq77f38k07hn2e5njp0acxhlheksn";
+                var ln_address = "supertestnet@stacker.news";
                 $( '.ln_amount' ).value = 5000;
-                var address = "bc1qefhunyf8rsq77f38k07hn2e5njp0acxhlheksn";
+                var address = bl_address;
                 var url = "bitcoin:" + address;
                 var a = document.createElement( "a" );
                 a.href = url;
@@ -294,7 +296,7 @@
                     var amount = Math.round( Number( $( '.ln_amount' ).value ) );
                     if ( !amount ) return alert( `please enter a valid amount such as 5000` );
                     $( '.ln_payment' ).innerHTML = 'loading...';
-                    var [ invoice, checking_id ] = await nwcjs.getZapRequest( 'supertestnet@stacker.news', amount );
+                    var [ invoice, checking_id ] = await nwcjs.getZapRequest( ln_address, amount );
                     $( '.ln_payment' ).innerHTML = '';
                     var url = "lightning:" + invoice;
                     var a = document.createElement( "a" );
