@@ -272,6 +272,52 @@
                     navigator.clipboard.writeText( copytext.value );
                     showToast( 'copied' );
                 }
+                var num_utxos;
+                var checkAddy = async addy => {
+                    var addy_data = await fetch( `https://mempool.space/api/address/${addy}` );
+                    addy_data = await addy_data.json();
+                    utxos_found = addy_data[ "mempool_stats" ][ "funded_txo_count" ] + addy_data[ "chain_stats" ][ "funded_txo_count" ];
+                    if ( isNaN( num_utxos ) ) {
+                        num_utxos = utxos_found;
+                        await nwcjs.waitSomeSeconds( 3 );
+                        return await checkAddy( addy );
+                    }
+                    if ( utxos_found > num_utxos ) {
+                        $( '.bl_payment' ).innerHTML = 'paid';
+                        await nwcjs.waitSomeSeconds( 2 );
+                        $( '.bl_payment' ).innerHTML = '';
+                        var address = bl_address;
+                        var url = "bitcoin:" + address;
+                        var a = document.createElement( "a" );
+                        a.href = url;
+                        a.target = "_blank";
+                        a.append( createQR( bl_address.toUpperCase() ) );
+                        var prep_div = document.createElement( "div" );
+                        prep_div.append( a );
+                        var div_html = prep_div.innerHTML;
+                        var html = `${div_html}`;
+                        var div = document.createElement( "div" );
+                        div.innerHTML = html;
+                        $( '.bl_payment' ).append( div.firstElementChild );
+                        var extra_html = `<div class="copy_box"><input class="copy_addy" value="${address}" disabled><div class="copy_btn">&#x2398;</div></div>`;
+                        var div = document.createElement( "div" );
+                        div.innerHTML = extra_html;
+                        $( '.bl_payment' ).append( div.firstElementChild );
+                        $( '.bl_payment .copy_btn' ).onclick = () => {
+                            var copytext = $( '.bl_payment .copy_addy' );
+                            copytext.select();
+                            copytext.setSelectionRange( 0, 99999 );
+                            navigator.clipboard.writeText( copytext.value );
+                            showToast( 'copied' );
+                        }
+                        num_utxos = undefined;
+                        await nwcjs.waitSomeSeconds( 3 );
+                        return await checkAddy( addy );
+                    }
+                    await nwcjs.waitSomeSeconds( 3 );
+                    return await checkAddy( addy );
+                }
+                checkAddy( bl_address );
                 $$( '.option_btn' ).forEach( ( item, index ) => {
                     item.onclick = e => {
                         if ( e.target.classList.contains( "active_btn" ) ) return;
