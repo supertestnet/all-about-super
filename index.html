@@ -4,12 +4,31 @@
         <title>Super Testnet | Freelance bitcoin dev</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no">
+        <script src="https://supertestnet.github.io/bitcoin-chess/js/qrcode.js"></script>
+        <script src="https://bundle.run/noble-secp256k1@1.2.14"></script>
+        <script src="https://bundle.run/bech32@2.0.0"></script>
+        <script src="https://supertestnet.github.io/nwcjs/nwcjs.js"></script>
         <script>
             if ( window.location.protocol.includes( "http:" ) ) {
                 var arr = [ "https:", ...window.location.href.split( "http:" ) ];
                 arr.splice( 1, 1 );
                 var url = arr.join( "" );
                 window.location.href = url;
+            }
+            var createQR = content => {
+                var dataUriPngImage = document.createElement( "img" ),
+                s = QRCode.generatePNG( content, {
+                    ecclevel: "M",
+                    format: "html",
+                    fillcolor: "#FFFFFF",
+                    textcolor: "#000000",
+                    margin: 4,
+                    modulesize: 8,
+                });
+                dataUriPngImage.src = s;
+                dataUriPngImage.className = "qr_code";
+                dataUriPngImage.style.width = "100%";
+                return dataUriPngImage;
             }
         </script>
         <style>
@@ -41,6 +60,9 @@
                 height: 1.8rem;
                 font-size: 1.15rem;
                 border: 1px solid grey;
+            }
+            .hidden {
+                display: none !important;
             }
             .software, .education {
                 display: flex;
@@ -77,6 +99,121 @@
                 font-size: 80%;
                 margin-top: .5rem;
             }
+            .payment_boxes {
+                border: 1px solid black;
+                border-radius: 1rem;
+                padding: 1rem;
+                max-width: 300px;
+                margin: auto;
+                text-align: center;
+            }
+            .payment_box {
+                margin-top: 1rem;
+            }
+            .option_btn {
+                background: #cccccc;
+                background: -webkit-linear-gradient(top, #cccccc 0%,#888888 44%,#444444 100%);
+                background: linear-gradient(to bottom, #cccccc 0%,#888888 44%,#444444 100%);
+                -webkit-box-shadow:  0px 2px 5px 1px rgba(155, 155, 155, .5);
+                box-shadow:  0px 2px 5px 1px rgba(155, 155, 155, .5);
+                color: white;
+                padding: .2rem;
+                cursor: pointer;
+                font-size: 75%;
+            }
+            .bl_choice {
+                padding: .2rem 1rem;
+                border-radius: 1rem 0rem 0rem 1rem;
+            }
+            .ln_choice {
+                padding: .2rem 1rem;
+                border-radius: 0rem 1rem 1rem 0rem;
+            }
+            .active_btn {
+                background: #888888;
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#444444), color-stop(56%,#888888), color-stop(100%,#cccccc));
+                background: linear-gradient(to bottom, #444444 0%,#888888 56%,#cccccc 100%);
+                -webkit-box-shadow: inset 0px 5px 5px 1px rgba(0, 0, 0, .3);
+                box-shadow: inset 0px 5px 5px 1px rgba(0, 0, 0, .3);
+            }
+            .copy_box {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 2.2rem;
+            }
+            .copy_addy {
+                width: 100%;
+                max-width: 78%;
+                word-wrap: break-word;
+                background-color: #cccccc;
+                border: 1px solid black;
+                padding: .3rem;
+                height: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: block;
+                user-select: none;
+            }
+            .copy_btn {
+                width: 100%;
+                max-width: 18%;
+                text-align: center;
+                background-color: #cccccc;
+                border: 1px solid black;
+                padding: .3rem;
+                height: 100%;
+                padding-top: 3%;
+                cursor: pointer;
+            }
+
+            /* TOAST */
+
+            .toast {
+                box-sizing: border-box;
+                visibility: hidden;
+                width: 250px;
+                margin-left: -125px;
+                background-color: rgb(97, 235, 52);
+                color: white;
+                text-align: center;
+                border-radius: 2px;
+                padding: 16px;
+                position: fixed;
+                z-index: 1;
+                left: 50%;
+                bottom: 30px;
+            }
+
+            .toast.show {
+                visibility: visible;
+                -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+                animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            }
+
+            @-webkit-keyframes fadein {
+                from {bottom: 0; opacity: 0;}
+                to {bottom: 30px; opacity: 1;}
+            }
+
+            @keyframes fadein {
+                from {bottom: 0; opacity: 0;}
+                to {bottom: 30px; opacity: 1;}
+            }
+
+            @-webkit-keyframes fadeout {
+                from {bottom: 30px; opacity: 1;}
+                to {bottom: 0; opacity: 0;}
+            }
+
+            @keyframes fadeout {
+                from {bottom: 30px; opacity: 1;}
+                to {bottom: 0; opacity: 0;}
+            }
+
+            /* END TOAST */
+
             @media screen and (max-width: 600px) {
             }
         </style>
@@ -88,10 +225,118 @@
             var $_GET = {}
             for ( var key of url_keys ) $_GET[ key ] = url_params.get( key );
         </script>
+        <script>
+            var showToast = content => {
+                $( '.toast' ).innerHTML = content;
+                $( '.toast' ).classList.add( "show" );
+                setTimeout( () => $( '.toast' ).classList.remove( "show" ), 3000 );
+            }
+        </script>
     </head>
     <body>
         <h1>Super Testnet</h1>
-        <p>Hi, I'm a freelance software developer focused on bitcoin, lightning, nostr, bitvm, and, most recently, hedgehog. You can support my work here: bc1qefhunyf8rsq77f38k07hn2e5njp0acxhlheksn</p>
+        <p>Hi, I'm a freelance software developer focused on bitcoin, lightning, nostr, bitvm, and, most recently, hedgehog. You can support my work by clicking <span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="if ( $( '.payment_boxes' ).classList.contains( 'hidden' ) ) $( '.payment_boxes' ).classList.remove( 'hidden' ); else $( '.payment_boxes' ).classList.add( 'hidden' );">here</span>.</p>
+        <div class="payment_boxes hidden">
+            <div class="bl_or_ln_btns"><span class="bl_choice option_btn active_btn">Base&nbsp;layer</span><span class="ln_choice option_btn">Lightning</span></div>
+            <div class="payment_box bl_payment"></div>
+            <div class="payment_box ln_payment hidden">
+                <p>Enter an amount in sats</p>
+                <p><input type="number" class="ln_amount" min="0" step="1" value="5000"></p>
+                <p><button class="submit_ln" onclick="submitLN();">Submit</button></p>
+            </div>
+            <script>
+                $( '.ln_amount' ).value = 5000;
+                var address = "bc1qefhunyf8rsq77f38k07hn2e5njp0acxhlheksn";
+                var url = "bitcoin:" + address;
+                var a = document.createElement( "a" );
+                a.href = url;
+                a.target = "_blank";
+                a.append( createQR( url.toUpperCase() ) );
+                var prep_div = document.createElement( "div" );
+                prep_div.append( a );
+                var div_html = prep_div.innerHTML;
+                var html = `${div_html}`;
+                var div = document.createElement( "div" );
+                div.innerHTML = html;
+                $( '.bl_payment' ).append( div.firstElementChild );
+                var extra_html = `<div class="copy_box"><input class="copy_addy" value="${address}" disabled><div class="copy_btn">&#x2398;</div></div>`;
+                var div = document.createElement( "div" );
+                div.innerHTML = extra_html;
+                $( '.bl_payment' ).append( div.firstElementChild );
+                $( '.bl_payment .copy_btn' ).onclick = () => {
+                    var copytext = $( '.bl_payment .copy_addy' );
+                    copytext.select();
+                    copytext.setSelectionRange( 0, 99999 );
+                    navigator.clipboard.writeText( copytext.value );
+                    showToast( 'copied' );
+                }
+                $$( '.option_btn' ).forEach( ( item, index ) => {
+                    item.onclick = e => {
+                        if ( e.target.classList.contains( "active_btn" ) ) return;
+                        if ( e.target.classList.contains( "bl_choice" ) ) {
+                            var other1 = "ln_choice";
+                            var other2 = "ln_payment";
+                            var self1 = "bl_choice";
+                            var self2 = "bl_payment";
+                        } else {
+                            var other1 = "bl_choice";
+                            var other2 = "bl_payment";
+                            var self1 = "ln_choice";
+                            var self2 = "ln_payment";
+                        }
+                        $( `.${self1}` ).classList.add( "active_btn" );
+                        $( `.${other1}` ).classList.remove( "active_btn" );
+                        $( `.${self2}` ).classList.remove( "hidden" );
+                        $( `.${other2}` ).classList.add( "hidden" );
+                    }
+                });
+                var submitLN = async () => {
+                    var amount = Math.round( Number( $( '.ln_amount' ).value ) );
+                    if ( !amount ) return alert( `please enter a valid amount such as 5000` );
+                    $( '.ln_payment' ).innerHTML = 'loading...';
+                    var [ invoice, checking_id ] = await nwcjs.getZapRequest( 'supertestnet@stacker.news', amount );
+                    $( '.ln_payment' ).innerHTML = '';
+                    var url = "lightning:" + invoice;
+                    var a = document.createElement( "a" );
+                    a.href = url;
+                    a.target = "_blank";
+                    a.append( createQR( url.toUpperCase() ) );
+                    var prep_div = document.createElement( "div" );
+                    prep_div.append( a );
+                    var div_html = prep_div.innerHTML;
+                    var html = `${div_html}`;
+                    var div = document.createElement( "div" );
+                    div.innerHTML = html;
+                    $( '.ln_payment' ).append( div.firstElementChild );
+                    var extra_html = `<div class="copy_box"><input class="copy_addy" value="${invoice}" disabled><div class="copy_btn">&#x2398;</div></div>`;
+                    var div = document.createElement( "div" );
+                    div.innerHTML = extra_html;
+                    $( '.ln_payment' ).append( div.firstElementChild );
+                    $( '.ln_payment .copy_btn' ).onclick = () => {
+                        var copytext = $( '.ln_payment .copy_addy' );
+                        copytext.select();
+                        copytext.setSelectionRange( 0, 99999 );
+                        navigator.clipboard.writeText( copytext.value );
+                        showToast( 'copied' );
+                    }
+                    var loop = async () => {
+                        var status = await nwcjs.checkZapStatus( invoice, checking_id );
+                        if ( status === "not paid yet" ) {
+                            await nwcjs.waitSomeSeconds( 1 );
+                            return await loop();
+                        }
+                    }
+                    await loop();
+                    $( '.ln_payment' ).innerHTML = 'paid';
+                    await nwcjs.waitSomeSeconds( 2 );
+                    $( '.ln_payment' ).innerHTML = `
+                        <p>Enter an amount in sats</p>
+                        <p><input type="number" class="ln_amount" min="0" step="1" value="5000"></p>
+                        <p><button class="submit_ln" onclick="submitLN();">Submit</button></p>
+                    `;
+                }
+            </script>
+        </div>
         <h2>Categories</h2>
         <ul>
             <li><a href="#social">Social</a></li>
@@ -559,5 +804,6 @@
                 else $( '.education' ).append( div );
             });
         </script>
+        <div class="toast"></div>
     </body>
 </html>
