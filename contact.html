@@ -50,6 +50,11 @@
             .hidden {
                 display: none !important;
             }
+            .how_work {
+                color: blue;
+                text-decoration: underline;
+                cursor: pointer;
+            }
             .toast {
                 box-sizing: border-box;
                 visibility: hidden;
@@ -94,17 +99,27 @@
             @media screen and (max-width: 600px) {
             }
         </style>
+        <script>
+            var $ = document.querySelector.bind( document );
+            var $$ = document.querySelectorAll.bind( document );
+        </script>
     </head>
     <body>
-        <!-- 
-            fake user:
-            npub14w46h2at4w46h2at4w46h2at4w46h2at4w46h2at4w46h2at4w4scf6zts
-
-            real user:
-            npub1yxp7j36cfqws7yj0hkfu2mx25308u4zua6ud22zglxp98ayhh96s8c399s
-        -->
+        <h1>Contact</h1>
+        <p>Use the form below to send me a message. Remember: tell me how to reply to you!</p>
+        <p class="how_work">How does this work?</p>
+        <p class="explainer hidden">This contact form is "gated" to prevent spam. The gate has two forms: you can either send me a bitcoin payment via the lightning network or you can do proof of work. If you do proof of work, your computer will create a message for me and run a proof of work algorithm so that it only sends me the message after doing a certain amount of work and including the proof in your message.</p>
         <div class="ncw_nostr_contact_form" settings='{"pow": 35, "recipient": "npub1yxp7j36cfqws7yj0hkfu2mx25308u4zua6ud22zglxp98ayhh96s8c399s","relays":["wss://relay.damus.io"],"lnaddy":["supertestnet@stacker.news", 5000]}'></div>
         <script src="https://supertestnet.github.io/nostr-contact-widget/ncw.js"></script>
         <div class="toast"></div>
+        <script>
+            $( '.how_work' ).onclick = () => {
+                if ( $( '.explainer' ).classList.contains( "hidden" ) ) {
+                    $( '.explainer' ).classList.remove( "hidden" );
+                } else {
+                    $( '.explainer' ).classList.add( "hidden" );
+                }
+            }
+        </script>
     </body>
 </html>
