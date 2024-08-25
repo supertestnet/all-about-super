@@ -297,7 +297,8 @@
             var current_day = ( new Date ).getDate();
             if ( current_day < 25 ) var month = current_month;
             else var month = next_month;
-            var date_of_next_workshop = `${month} 25 at 7:00 pm New York City time`;
+            //var date_of_next_workshop = `${month} 25 at 7:00 pm New York City time`;
+            var date_of_next_workshop = `to be determined`;
             $( '.upcoming_image' ).src = schedule[ month ][ "upcoming_image" ];
             $( '.what' ).innerText = schedule[ month ][ "title" ];
             $( '.when' ).innerText = date_of_next_workshop;
